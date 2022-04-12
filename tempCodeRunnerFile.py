@@ -1,0 +1,1 @@
+D:\Projects\unity\Chromesthesia\Chromesthesia\Assets\AssetsUI\Assets-main\Resources
