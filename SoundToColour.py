@@ -8,10 +8,6 @@ import numpy as np
 import statistics as s
 import math
 
-# song_path = 'pps.mp3'  # Iron Lotus boiiiiiiiiiiiiiiiiii~~
-# song, sr = librosa.load(song_path)
-
-
 NOTES = ['C', 'C#', 'D', 'D#', 'E', 'F', 'F#', 'G', 'G#', 'A', 'A#', 'B']
 
 
@@ -26,7 +22,7 @@ def note2hue(note, noteList, rtrn="hexa"):
     rgb = (rgb[0]*255, rgb[1]*255, rgb[2]*255)
     rgb = (math.floor(rgb[0]), math.floor(rgb[1]), math.floor(rgb[2]))
     if(rtrn == 'rgb'):
-        return r
+        return rgb
     hexa = '#%02x%02x%02x' % rgb  # how to get hexadecimal from rgb
     return hexa
 
@@ -45,8 +41,7 @@ def midi2hue(midi, amp, maxAmp, rtrn="hexa"):
     hue = (midi % 12)/12
     val = 0.70+(midi/96)*0.30
     sat = 0.70-(midi/96)*0.30
-    # Need to incorporate Amp --------------------
-#     print(amp,maxAmp)
+    
     ampp = 0.20 * amp/maxAmp
     sat -= ampp
     val += ampp
@@ -57,7 +52,7 @@ def midi2hue(midi, amp, maxAmp, rtrn="hexa"):
     rgb = (math.floor(rgb[0]), math.floor(rgb[1]), math.floor(rgb[2]))
     if(rtrn == 'rgb'):
         return rgb
-    hexa = '#%02x%02x%02x' % rgb  # how to get hexadecimal from rgb
+    hexa = '#%02x%02x%02x' % rgb
     return hexa
 
 def allMidi2Hue(allMidi):
@@ -75,10 +70,10 @@ def allMidi2Hue(allMidi):
 def getTempo(song, sr):
     onset_env = librosa.onset.onset_strength(y=song, sr=sr)
     tempo = librosa.beat.tempo(onset_envelope=onset_env, sr=sr)
-    return tempo  # in bpm
+    return tempo
 
 def secondsPerBeat(tempo):
-    secPerBeat = 60 / tempo  # 60 seconds per beat
+    secPerBeat = 60 / tempo
     return secPerBeat
 
 def getFreq(signal, sr):
@@ -105,7 +100,6 @@ def getMidi(magnitude):
     return midi
 
 def getMidiAll(signal, sr, spb):
-    # all calculated in sample length
     songDuration = len(signal)
     samplePerBeat = math.ceil(spb*sr)
     rms = getRms(signal, samplePerBeat)
@@ -122,7 +116,7 @@ def getMidiAll(signal, sr, spb):
                        'end': round((p+samplePerBeat)*(1/sr), 2), 'midi': midi})
     for i in range(len(allMidi)):
         allMidi[i]['amp'] = rms[i]
-    return allMidi  # seconds, seconds, note
+    return allMidi
 
 def getAllMidi(song, sr):
     tempo = getTempo(song, sr)

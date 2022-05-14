@@ -3,8 +3,11 @@ import SoundToColour as stc
 import matplotlib.pyplot as plt
 from PIL import ImageColor
 
-song_path = 'm-il.mp3'
+song_path = 'D:\\Projects\\unity\\Chromesthesia\\Chromesthesia\\Assets\\AssetsUI\\Assets-main\\Resources\\Songs\\Dance With Silence\\Dance With Silence.mp3'
 song = stc.soundToColor(song_path)
+
+for s in song:
+    print(s)
 
 pause = song[0]['end']
 

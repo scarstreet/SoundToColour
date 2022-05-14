@@ -1,6 +1,5 @@
 from SoundToColour import soundToColor
 
-# D:\Projects\unity\Chromesthesia\Chromesthesia\Assets\AssetsUI\Assets-main\Resources
 path = input("input resources folder location:")
 if(path[-1] != '\\'):
   path += '\\'
@@ -43,21 +42,21 @@ with open(songlistPath) as songlist:
               content = bm[contentIndex:]
               content = [c.split(',') for c in content]
               for c in content:
-                time = c[-1] if int(c[0]) == 0 else c[5]
-                time = float(time)
-                for color in colourDictionary:
-                  if(color['start'] <= time < color['end']):
-                    c[1] = color['colour']
-                    break
+                if c[0]!='':
+                  time = c[-1] if int(c[0]) == 0 else c[5]
+                  time = float(time)
+                  for color in colourDictionary:
+                    if(color['start'] <= time < color['end']):
+                      c[1] = color['colour']
+                      break
               content = [','.join(c) for c in content]
               bm[contentIndex:] = content
-              # for b in bm:
-              #   print(b)
               bm = '\n'.join(bm)
             bmTxt = open(bmPath, 'w')
             bmTxt.write(bm)
             print(songName + " || " + bmPath + " - done")
-          except:
+          except Exception as e:
             print(songName + " || " + bmPath + " - ERROR!!! file may have incorrect format")
+            print(e,end='\n\n')
 
 
