@@ -1,6 +1,6 @@
 from SoundToColour import soundToColor
 
-path = input("input resources folder location:")
+path = input("input resources folder location:") # As in the resource folder of the chromesthesia unity project
 if(path[-1] != '\\'):
   path += '\\'
 songlistPath = path + 'songlist.txt'
